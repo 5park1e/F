@@ -1,0 +1,39 @@
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
+#include <queue>
+#include <stack>
+
+using namespace std;
+
+stack<int> S;
+
+
+char* func(char *str){//单次除法，并且将余压入栈
+	if(strlen(str)==0) return NULL;//递归出口
+	int Q,R=0;//Q商,R余
+	for(int i=0;i<strlen(str);i++){//一次循环出一个数
+		Q=R*10+str[i]-'0';
+		str[i]=Q/2+'0';
+		R=Q%2;
+	}
+	S.push(R);//入栈
+	int i=0;
+	while(str[i]=='0') i++;//找到非0首项
+	return func(str+i);
+}
+
+int main(){
+	char str[31];
+	gets(str);
+	//数组str非空时，循环一次找到一个；
+	func(str);//递归	
+	for(int i=0;!S.empty();i++){//Cout
+		printf("%d",S.top());
+		S.pop();
+	}
+	return 0;
+}
