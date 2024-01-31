@@ -1,0 +1,56 @@
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
+#include <queue>
+#include <stack>
+
+using namespace std;
+
+stack<char> S;
+
+int main(){
+	char a[1000],b[1000];
+	scanf("%s%s",a,b);
+	int m=strlen(a),n=strlen(b);	
+	int max=m>n?m:n;
+	int flag=0;
+	while(m>0&&n>0){
+		int temp=a[--m]+b[--n]-'0'-'0'+flag;
+		if(flag==1) flag=0;
+		if(temp>=10){
+			S.push(temp%10+'0');
+			flag=1;
+		}else{
+			S.push(temp+'0');
+		}
+	}
+	while(m>0){
+		int temp=a[--m]-'0'+flag;
+		if(flag==1) flag=0;
+		if(temp>=10){
+			S.push(temp%10+'0');
+			flag=1;
+		}else{
+			S.push(temp+'0');
+		}
+	}
+	while(n>0){
+		int temp=b[--n]-'0'+flag;
+		if(flag==1) flag=0;		
+		if(temp>=10){
+			S.push(temp%10+'0');
+			flag=1;
+		}else{
+			S.push(temp+'0');
+		}		
+	}
+	if(flag==1) S.push('1');
+	for(int i=0;!S.empty();i++){
+		printf("%c",S.top());
+		S.pop();
+	}
+	return 0;
+}
